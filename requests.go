@@ -2,7 +2,6 @@ package parity
 
 import (
 	"bytes"
-	"encoding/hex"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
@@ -65,16 +64,5 @@ func GenRequest(host string, payload []byte) (req *http.Request, err error) {
 		return
 	}
 	req.Header.Set("Content-Type", "application/json")
-	return
-}
-
-func DecodeHex(h string) (decoded string, err error) {
-	srcBytes := []byte(h)
-	dst := make([]byte, hex.DecodedLen(len(srcBytes)))
-	n, err := hex.Decode(dst, srcBytes)
-	if err != nil {
-		return
-	}
-	decoded = string(dst[:n])
 	return
 }

@@ -13,7 +13,7 @@ func main() {
 		log.Fatal(err)
 	}
 	client := eth.NewClient(node)
-	resp, err := client.Syncing()
+	resp, err := client.BlockNumber()
 	if err != nil {
 		return
 	}
