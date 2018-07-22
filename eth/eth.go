@@ -2,10 +2,17 @@ package eth
 
 import (
 	"encoding/json"
+
+	parity "github.com/tinyzimmer/parity-go"
 )
 
 type Client struct {
-	Node ParityNode
+	Node parity.ParityNode
+}
+
+func NewClient(node parity.ParityNode) (c Client) {
+	c.Node = node
+	return
 }
 
 type EthSyncingInput []string
@@ -17,9 +24,9 @@ type EthSyncingOutput struct {
 	HighestBlock  string `json:"highestBlock"`
 }
 
-func (e Eth) Syncing() (response *EthSyncingOutput, err error) {
+func (c Client) Syncing() (response *EthSyncingOutput, err error) {
 	var raw EthSyncingOutput
-	resp, suc, err := e.Post(e.Host, "eth_syncing", EthSyncingInput{})
+	resp, suc, err := c.Node.Post("eth_syncing", EthSyncingInput{})
 	if !suc {
 		raw.Syncing = false
 	} else {

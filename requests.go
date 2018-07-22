@@ -25,12 +25,12 @@ type ParityResponse struct {
 	Result  json.RawMessage `json:"result"`
 }
 
-func (c *ParityNode) Post(host string, method string, params interface{}) (response ParityResponse, success bool, err error) {
+func (c *ParityNode) Post(method string, params interface{}) (response ParityResponse, success bool, err error) {
 	payload, err := c.GenPayload(method, params)
 	if err != nil {
 		return
 	}
-	req, err := GenRequest(host, payload)
+	req, err := GenRequest(c.Host, payload)
 	if err != nil {
 		return
 	}
