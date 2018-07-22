@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	parity "github.com/tinyzimmer/parity-go"
+	"github.com/tinyzimmer/parity-go"
 	"github.com/tinyzimmer/parity-go/eth"
 )
 
