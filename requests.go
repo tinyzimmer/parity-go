@@ -3,8 +3,11 @@ package parity
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strconv"
+	"strings"
 )
 
 type PostPayload struct {
@@ -65,4 +68,14 @@ func GenRequest(host string, payload []byte) (req *http.Request, err error) {
 	}
 	req.Header.Set("Content-Type", "application/json")
 	return
+}
+
+func HexToInt(hex interface{}) uint64 {
+	hexStr := fmt.Sprintf("%v", hex)
+	// remove 0x suffix if found in the input string
+	cleaned := strings.Replace(hexStr, "0x", "", -1)
+
+	// base 16 for hexadecimal
+	result, _ := strconv.ParseUint(cleaned, 16, 64)
+	return uint64(result)
 }

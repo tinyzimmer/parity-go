@@ -17,5 +17,6 @@ func main() {
 	if err != nil {
 		return
 	}
-	log.Printf("%+v\v", resp)
+	log.Printf("%+v\n", resp)
+	log.Println(parity.HexToInt(resp))
 }
