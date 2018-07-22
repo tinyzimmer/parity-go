@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -22,30 +23,65 @@ type ParityResponse struct {
 	Result  json.RawMessage `json:"result"`
 }
 
+func (c *ParityNode) GenericCall(method string, input interface{}, output interface{}) (err error) {
+	if c.Debug {
+		log.Printf("DEBUG: Using GenericCall for method: %s input: %+v\n", method, input)
+	}
+	resp, suc, err := c.Post(method, input)
+	if err != nil {
+		return
+	}
+	if !suc {
+		output = false
+		return
+	}
+	json.Unmarshal(resp.Result, &output)
+	return
+}
+
 func (c *ParityNode) Post(method string, params interface{}) (response ParityResponse, success bool, err error) {
 	payload, err := c.GenPayload(method, params)
+	if c.Debug {
+		log.Printf("DEBUG: Payload generated: %s\n", string(payload))
+	}
 	if err != nil {
+		log.Printf("ERROR: Failed to generate payload from params: %v\n", params)
 		return
 	}
 	req, err := GenRequest(c.Host, payload)
 	if err != nil {
+		log.Printf("ERROR: Failed to initialize request to %s with payload %s", c.Host, string(payload))
 		return
 	}
 	client := &http.Client{}
+	if c.Debug {
+		log.Printf("DEBUG: Posting payload to %s\n", c.Host)
+	}
 	resp, err := client.Do(req)
 	if err != nil {
+		log.Printf("ERROR: Failed to receive response from %s\n", c.Host)
 		return
 	}
 	defer resp.Body.Close()
+	if c.Debug {
+		log.Printf("DEBUG: Received response from %s. Attemtping to unmarshal.\n", c.Host)
+	}
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return
 	}
 	json.Unmarshal(data, &response)
+	if c.Debug {
+		log.Printf("DEBUG: Raw result: %s\n", string(response.Result))
+	}
 	if string(response.Result) == "false" {
 		success = false
 	} else {
 		success = true
+	}
+	c.IdCounter += 1
+	if c.Debug {
+		log.Printf("DEBUG: ID counter incremented to %v\n", c.IdCounter)
 	}
 	return
 }

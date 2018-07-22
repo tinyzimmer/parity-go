@@ -1,6 +1,7 @@
 package parity
 
 import (
+	"log"
 	"net"
 	"strings"
 	"time"
@@ -14,25 +15,37 @@ const (
 )
 
 type ParityNode struct {
-	Host  string
-	Debug bool
+	Host      string
+	Debug     bool
+	IdCounter uint64
 }
 
 func GetParityNode(url string, debug bool) (n ParityNode, err error) {
 	if url == "" {
 		url = PARITY_DEFAULT_HOST
 	}
-	n = ParityNode{url, debug}
+	if debug {
+		log.Printf("DEBUG: Initializing Parity client for %s\n", url)
+	}
+	n = ParityNode{url, debug, 1}
 	err = n.TestConnection()
 	return
 }
 
 func (n *ParityNode) TestConnection() (err error) {
+	if n.Debug {
+		log.Printf("DEBUG: Testing connectivity to %s\n", n.Host)
+		log.Printf("DEBUG: Using built-in timeout of %v seconds\n", DEFAULT_TEST_TIMEOUT)
+	}
 	stripHttp := strings.Replace(n.Host, "http://", "", -1)
 	con, err := net.DialTimeout("tcp", stripHttp, time.Duration(DEFAULT_TEST_TIMEOUT*time.Second))
 	if err != nil {
+		log.Printf("ERROR: Could not reach %s\n", n.Host)
 		return
 	} else {
+		if n.Debug {
+			log.Printf("DEBUG: %s is available. Closing test connection.", n.Host)
+		}
 		con.Close()
 	}
 	return

@@ -10,6 +10,7 @@ const (
 	ETH_ACCOUNTS     = "eth_accounts"
 	ETH_BLOCK_NUMBER = "eth_blockNumber"
 	ETH_SYNCING      = "eth_syncing"
+	ETH_CALL         = "eth_call"
 )
 
 type Client struct {
@@ -21,28 +22,14 @@ func NewClient(node parity.ParityNode) (c Client) {
 	return
 }
 
-func (c *Client) GenericCall(method string, input interface{}, output interface{}) (err error) {
-	resp, suc, err := c.Node.Post(method, input)
-	if err != nil {
-		return
-	}
-	if !suc {
-		output = false
-		return
-	}
-	json.Unmarshal(resp.Result, &output)
-	return
-}
-
 func (c *Client) Accounts() (response EthAccountsOutput, err error) {
 	response = make(EthAccountsOutput, 0)
-	err = c.GenericCall(ETH_ACCOUNTS, EthAccountsInput{}, &response)
+	err = c.Node.GenericCall(ETH_ACCOUNTS, EthAccountsInput{}, &response)
 	return
 }
 
 func (c *Client) BlockNumber() (response EthBlockNumberOutput, err error) {
-	response = ""
-	err = c.GenericCall(ETH_BLOCK_NUMBER, EthBlockNumberInput{}, &response)
+	err = c.Node.GenericCall(ETH_BLOCK_NUMBER, EthBlockNumberInput{}, &response)
 	return
 }
 

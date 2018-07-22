@@ -8,15 +8,15 @@ import (
 )
 
 func main() {
-	node, err := parity.GetParityNode("", false)
+	node, err := parity.GetParityNode("", true)
 	if err != nil {
 		log.Fatal(err)
 	}
 	client := eth.NewClient(node)
-	resp, err := client.BlockNumber()
+	resp, err := client.Syncing()
 	if err != nil {
-		return
+		log.Fatal(err)
 	}
-	log.Printf("%+v\n", resp)
-	log.Println(resp.Decode())
+	log.Printf("Encoded: %+v\n", resp)
+	log.Printf("Decoded: %+v\n", resp.DecodeAll())
 }
