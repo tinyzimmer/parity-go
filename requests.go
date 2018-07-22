@@ -8,11 +8,6 @@ import (
 	"net/http"
 )
 
-const (
-	JSON_RPC_VERSION = "2.0"
-	ID               = 1
-)
-
 type PostPayload struct {
 	Method  string      `json:"method"`
 	Params  interface{} `json:"params"`

@@ -3,7 +3,7 @@ package eth
 import (
 	"encoding/json"
 
-	parity "github.com/tinyzimmer/parity-go"
+	"github.com/tinyzimmer/parity-go"
 )
 
 type Client struct {

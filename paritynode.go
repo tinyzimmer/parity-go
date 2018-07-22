@@ -1,11 +1,9 @@
 package parity
 
-import (
-	"log"
-)
-
 const (
 	PARITY_DEFAULT_HOST = "http://localhost:8545"
+	JSON_RPC_VERSION    = "2.0"
+	ID                  = 1
 )
 
 type ParityNode struct {
@@ -19,11 +17,4 @@ func GetParityNode(url string, debug bool) (n ParityNode, err error) {
 	}
 	n = ParityNode{url, debug}
 	return
-}
-
-func main() {
-	_, err := GetParityNode("", false)
-	if err != nil {
-		log.Fatal(err)
-	}
 }
