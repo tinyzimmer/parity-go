@@ -18,5 +18,5 @@ func main() {
 		return
 	}
 	log.Printf("%+v\n", resp)
-	log.Println(parity.HexToInt(resp))
+	log.Println(resp.Decode())
 }

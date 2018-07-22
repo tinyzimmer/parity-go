@@ -21,23 +21,6 @@ func NewClient(node parity.ParityNode) (c Client) {
 	return
 }
 
-type EthAccountsInput []string
-
-type EthBlockNumberInput []string
-
-type EthSyncingInput []string
-
-type EthAccountsOutput []string
-
-type EthBlockNumberOutput string
-
-type EthSyncingOutput struct {
-	Syncing       bool
-	StartingBlock string `json:"startingBlock"`
-	CurrentBlock  string `json:"currentBlock"`
-	HighestBlock  string `json:"highestBlock"`
-}
-
 func (c *Client) GenericCall(method string, input interface{}, output interface{}) (err error) {
 	resp, suc, err := c.Node.Post(method, input)
 	if err != nil {
