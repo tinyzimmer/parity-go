@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"github.com/tinyzimmer/parity-go"
 	"github.com/tinyzimmer/parity-go/eth"
@@ -21,15 +22,21 @@ func main() {
 
 	client := eth.NewClient(node)
 
-	// query the sync status of the node
+	for {
 
-	resp, err := client.Syncing()
-	if err != nil {
-		log.Fatal(err)
+		// query the sync status of the node
+
+		resp, err := client.Syncing()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// Log the hexadecimal encoded responses and decode them as well.
+
+		log.Printf("Encoded: %+v\n", resp)
+		log.Printf("Decoded: %+v\n", resp.DecodeAll())
+
+		time.Sleep(time.Duration(3 * time.Second))
+
 	}
-
-	// Log the hexadecimal encoded responses and decode them as well.
-
-	log.Printf("Encoded: %+v\n", resp)
-	log.Printf("Decoded: %+v\n", resp.DecodeAll())
 }
