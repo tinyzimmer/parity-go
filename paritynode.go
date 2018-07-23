@@ -52,7 +52,7 @@ func (n *ParityNode) TestConnection() (err error) {
 		return
 	} else {
 		if n.Debug {
-			log.Printf("DEBUG: %s is available. Closing test connection.", n.Host)
+			log.Printf("DEBUG: %s is available. Closing test connection.\n", n.Host)
 		}
 		con.Close()
 	}
