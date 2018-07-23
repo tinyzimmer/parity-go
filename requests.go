@@ -55,35 +55,43 @@ func (c *ParityNode) Post(method string, params interface{}) (response ParityRes
 	// Do a post request to a Parity endpoint with a given struct of parameters
 
 	payload, err := c.GenPayload(method, params)
+
 	if c.Debug {
 		log.Printf("DEBUG: Payload generated: %s\n", string(payload))
 	}
+
 	if err != nil {
 		log.Printf("ERROR: Failed to generate payload from params: %v\n", params)
 		return
 	}
+
 	req, err := GenRequest(c.Host, payload)
 	if err != nil {
 		log.Printf("ERROR: Failed to initialize request to %s with payload %s", c.Host, string(payload))
 		return
 	}
+
 	client := &http.Client{}
 	if c.Debug {
 		log.Printf("DEBUG: Posting payload to %s\n", c.Host)
 	}
+
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Printf("ERROR: Failed to receive response from %s\n", c.Host)
 		return
 	}
+
 	defer resp.Body.Close()
 	if c.Debug {
 		log.Printf("DEBUG: Received response from %s. Attemtping to unmarshal.\n", c.Host)
 	}
+
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return
 	}
+
 	json.Unmarshal(data, &response)
 	if c.Debug {
 		log.Printf("DEBUG: Raw result: %s\n", string(response.Result))
