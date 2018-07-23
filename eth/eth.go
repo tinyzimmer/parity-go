@@ -29,29 +29,29 @@ func NewClient(node parity.ParityNode) (c Client) {
 
 }
 
-func (c *Client) Accounts() (response EthAccountsOutput, err error) {
+func (c *Client) Accounts() (response AccountsOutput, err error) {
 
-	response = make(EthAccountsOutput, 0)
-	err = c.Node.GenericCall(ETH_ACCOUNTS, EthAccountsInput{}, &response)
+	response = make(AccountsOutput, 0)
+	err = c.Node.GenericCall(ETH_ACCOUNTS, AccountsInput{}, &response)
 	return
 
 }
 
-func (c *Client) BlockNumber() (response EthBlockNumberOutput, err error) {
+func (c *Client) BlockNumber() (response BlockNumberOutput, err error) {
 
-	err = c.Node.GenericCall(ETH_BLOCK_NUMBER, EthBlockNumberInput{}, &response)
+	err = c.Node.GenericCall(ETH_BLOCK_NUMBER, BlockNumberInput{}, &response)
 	return
 
 }
 
-func (c *Client) Syncing() (response EthSyncingOutput, err error) {
+func (c *Client) Syncing() (response SyncingOutput, err error) {
 
 	// When the client is done syncing, it simply returns a false.
 	// This is stupid on so many levels. I'd rather a response with a matching
 	// currentBlock and highestBlock. That would actually make sense and not
 	// require this insane conditional. See how easy the others are?!
 
-	resp, suc, err := c.Node.Post(ETH_SYNCING, EthSyncingInput{})
+	resp, suc, err := c.Node.Post(ETH_SYNCING, SyncingInput{})
 	if err != nil {
 		return
 	}

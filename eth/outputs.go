@@ -4,15 +4,15 @@ import (
 	"github.com/tinyzimmer/parity-go"
 )
 
-type EthAccountsOutput []string
+type AccountsOutput []string
 
-type EthBlockNumberOutput string
+type BlockNumberOutput string
 
-func (o EthBlockNumberOutput) Decode() uint64 {
+func (o BlockNumberOutput) Decode() uint64 {
 	return parity.HexToInt(o)
 }
 
-type EthSyncingOutput struct {
+type SyncingOutput struct {
 	Syncing             bool
 	StartingBlock       string `json:"startingBlock"`
 	CurrentBlock        string `json:"currentBlock"`
@@ -21,7 +21,7 @@ type EthSyncingOutput struct {
 	WarpChunksProcessed string `json:"warpChunksProcessed"`
 }
 
-type EthSyncingOutputDecoded struct {
+type SyncingOutputDecoded struct {
 	Syncing             bool
 	StartingBlock       uint64
 	CurrentBlock        uint64
@@ -30,8 +30,8 @@ type EthSyncingOutputDecoded struct {
 	WarpChunksProcessed uint64
 }
 
-func (o EthSyncingOutput) DecodeAll() EthSyncingOutputDecoded {
-	return EthSyncingOutputDecoded{
+func (o SyncingOutput) DecodeAll() SyncingOutputDecoded {
+	return SyncingOutputDecoded{
 		Syncing:             o.Syncing,
 		StartingBlock:       parity.HexToInt(o.StartingBlock),
 		CurrentBlock:        parity.HexToInt(o.CurrentBlock),

@@ -1,7 +1,7 @@
 package eth
 
-type EthAccountsInput []string
+type AccountsInput []string
 
-type EthBlockNumberInput []string
+type BlockNumberInput []string
 
-type EthSyncingInput []string
+type SyncingInput []string
