@@ -30,14 +30,18 @@ func NewClient(node parity.ParityNode) (c Client) {
 }
 
 func (c *Client) Accounts() (response EthAccountsOutput, err error) {
+
 	response = make(EthAccountsOutput, 0)
 	err = c.Node.GenericCall(ETH_ACCOUNTS, EthAccountsInput{}, &response)
 	return
+
 }
 
 func (c *Client) BlockNumber() (response EthBlockNumberOutput, err error) {
+
 	err = c.Node.GenericCall(ETH_BLOCK_NUMBER, EthBlockNumberInput{}, &response)
 	return
+
 }
 
 func (c *Client) Syncing() (response EthSyncingOutput, err error) {
@@ -58,4 +62,5 @@ func (c *Client) Syncing() (response EthSyncingOutput, err error) {
 		response.Syncing = true
 	}
 	return
+
 }
