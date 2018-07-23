@@ -18,7 +18,7 @@ import (
 type PostPayload struct {
 	Method  string      `json:"method"`
 	Params  interface{} `json:"params"`
-	Id      int         `json:"id"`
+	Id      uint64      `json:"id"`
 	JsonRPC string      `json:"jsonrpc"`
 }
 
@@ -115,7 +115,7 @@ func (c *ParityNode) GenPayload(method string, params interface{}) (payload []by
 	pstruct := PostPayload{
 		Method:  method,
 		Params:  params,
-		Id:      1,
+		Id:      c.IdCounter,
 		JsonRPC: JSON_RPC_VERSION,
 	}
 	payload, err = json.Marshal(pstruct)
