@@ -45,7 +45,7 @@ func (c *Client) Syncing() (response EthSyncingOutput, err error) {
 	// When the client is done syncing, it simply returns a false.
 	// This is stupid on so many levels. I'd rather a response with a matching
 	// currentBlock and highestBlock. That would actually make sense and not
-	// require this insane conditional
+	// require this insane conditional. See how easy the others are?!
 
 	resp, suc, err := c.Node.Post(ETH_SYNCING, EthSyncingInput{})
 	if err != nil {
