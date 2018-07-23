@@ -21,6 +21,9 @@ type ParityNode struct {
 }
 
 func GetParityNode(url string, debug bool) (n ParityNode, err error) {
+
+	// Configure a struct representation of a Parity Node and test connectivity
+
 	if url == "" {
 		url = PARITY_DEFAULT_HOST
 	}
@@ -30,9 +33,14 @@ func GetParityNode(url string, debug bool) (n ParityNode, err error) {
 	n = ParityNode{url, debug, 1}
 	err = n.TestConnection()
 	return
+
 }
 
 func (n *ParityNode) TestConnection() (err error) {
+
+	// Dies a simple socket bind test to the jsonrpc endpoint of the Parity node
+	// This confirms whether or not we have access to it.
+
 	if n.Debug {
 		log.Printf("DEBUG: Testing connectivity to %s\n", n.Host)
 		log.Printf("DEBUG: Using built-in timeout of %v seconds\n", DEFAULT_TEST_TIMEOUT)
@@ -49,4 +57,5 @@ func (n *ParityNode) TestConnection() (err error) {
 		con.Close()
 	}
 	return
+
 }

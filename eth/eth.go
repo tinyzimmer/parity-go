@@ -14,12 +14,19 @@ const (
 )
 
 type Client struct {
+
+	// struct representation of a client for the eth API
+
 	Node parity.ParityNode
 }
 
 func NewClient(node parity.ParityNode) (c Client) {
+
+	// set the Parity node for the client
+
 	c.Node = node
 	return
+
 }
 
 func (c *Client) Accounts() (response EthAccountsOutput, err error) {
@@ -34,6 +41,12 @@ func (c *Client) BlockNumber() (response EthBlockNumberOutput, err error) {
 }
 
 func (c *Client) Syncing() (response EthSyncingOutput, err error) {
+
+	// When the client is done syncing, it simply returns a false.
+	// This is stupid on so many levels. I'd rather a response with a matching
+	// currentBlock and highestBlock. That would actually make sense and not
+	// require this insane conditional
+
 	resp, suc, err := c.Node.Post(ETH_SYNCING, EthSyncingInput{})
 	if err != nil {
 		return
