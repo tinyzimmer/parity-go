@@ -9,7 +9,7 @@ type AccountsOutput []string
 type BlockNumberOutput string
 
 func (o BlockNumberOutput) Decode() uint64 {
-	return parity.HexToInt(o)
+	return parityrpc.HexToInt(o)
 }
 
 type SyncingOutput struct {
@@ -33,10 +33,10 @@ type SyncingOutputDecoded struct {
 func (o SyncingOutput) DecodeAll() SyncingOutputDecoded {
 	return SyncingOutputDecoded{
 		Syncing:             o.Syncing,
-		StartingBlock:       parity.HexToInt(o.StartingBlock),
-		CurrentBlock:        parity.HexToInt(o.CurrentBlock),
-		HighestBlock:        parity.HexToInt(o.HighestBlock),
-		WarpChunksAmount:    parity.HexToInt(o.WarpChunksAmount),
-		WarpChunksProcessed: parity.HexToInt(o.WarpChunksProcessed),
+		StartingBlock:       parityrpc.HexToInt(o.StartingBlock),
+		CurrentBlock:        parityrpc.HexToInt(o.CurrentBlock),
+		HighestBlock:        parityrpc.HexToInt(o.HighestBlock),
+		WarpChunksAmount:    parityrpc.HexToInt(o.WarpChunksAmount),
+		WarpChunksProcessed: parityrpc.HexToInt(o.WarpChunksProcessed),
 	}
 }

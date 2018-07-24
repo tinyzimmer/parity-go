@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/tinyzimmer/parity-go"
-	"github.com/tinyzimmer/parity-go/eth"
+	"github.com/tinyzimmer/parity-go/parity"
 )
 
 // Example command for starting Parity
@@ -19,28 +19,25 @@ func main() {
 	// Connect to a Parity Node. We take the default localhost:8545 and
 	// use debug to see all output
 
-	node, err := parity.GetParityNode("", true)
+	node, err := parityrpc.GetParityNode("", false)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Create a client for the eth api
 
-	client := eth.NewClient(node)
+	client := parity.NewClient(node)
 
 	for {
 
 		// query the sync status of the node
 
-		resp, err := client.Syncing()
+		resp, err := client.Mode()
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		// Log the hexadecimal encoded responses and decode them as well.
-
-		log.Printf("Encoded: %+v\n", resp)
-		log.Printf("Decoded: %+v\n", resp.DecodeAll())
+		log.Printf("Response: %+v\n", resp)
 
 		time.Sleep(time.Duration(3 * time.Second))
 

@@ -1,4 +1,4 @@
-package parity
+package parityrpc
 
 import (
 	"bytes"

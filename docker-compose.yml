@@ -1,0 +1,19 @@
+version: '2'
+services:
+  parity:
+    image: parity/parity:latest
+    volumes:
+      - parity_data:/opt/parity_data
+    ports:
+      - 8100:8100
+      - 8545:8545
+      - 30303:30303
+      - 30303:30303/udp
+    command: --base-path /opt/parity_data --db-path /opt/parity_data/parity-db
+             --no-serve-light --chain=kovan
+             --max-peers 250 --snapshot-peers 50 --min-peers 50
+             --mode active --tracing off --pruning fast --db-compaction ssd
+             --cache-size 4096 --jsonrpc-interface all
+volumes:
+  parity_data:
+    driver: local
