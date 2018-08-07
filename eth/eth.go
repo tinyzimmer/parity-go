@@ -7,10 +7,11 @@ import (
 )
 
 const (
-	ETH_ACCOUNTS     = "eth_accounts"
-	ETH_BLOCK_NUMBER = "eth_blockNumber"
-	ETH_SYNCING      = "eth_syncing"
-	ETH_CALL         = "eth_call"
+	ETH_ACCOUNTS            = "eth_accounts"
+	ETH_BLOCK_NUMBER        = "eth_blockNumber"
+	ETH_SYNCING             = "eth_syncing"
+	ETH_CALL                = "eth_call"
+	ETH_GET_BLOCK_BY_NUMBER = "eth_getBlockByNumber"
 )
 
 type Client struct {
@@ -63,4 +64,10 @@ func (c *Client) Syncing() (response SyncingOutput, err error) {
 	}
 	return
 
+}
+
+func (c *Client) GetBlockByNumber(input GetBlockByNumberInput) (response GetBlockByNumberOutput, err error) {
+	convertedInput := []interface{}{input.BlockNumber, input.ShowFullTxns}
+	err = c.Node.GenericCall(ETH_GET_BLOCK_BY_NUMBER, convertedInput, &response)
+	return
 }

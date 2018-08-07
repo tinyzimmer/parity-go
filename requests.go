@@ -154,3 +154,7 @@ func HexToInt(hex interface{}) uint64 {
 	result, _ := strconv.ParseUint(cleaned, 16, 64)
 	return uint64(result)
 }
+
+func IntToHex(i int64) string {
+	return fmt.Sprintf("0x%s", strconv.FormatInt(i, 16))
+}
