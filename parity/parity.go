@@ -15,7 +15,7 @@ type Client struct {
 	Node parityrpc.ParityNode
 }
 
-func NewClient(node parityrpc.ParityNode) (c *Client) {
+func NewClient(node parityrpc.ParityNode) (c Client) {
 
 	// set the Parity node for the client
 
