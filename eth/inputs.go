@@ -11,4 +11,4 @@ type GetBlockByNumberInput struct {
 	ShowFullTxns bool
 }
 
-type GetBalanceInput string
+type GetBalanceInput []string
