@@ -12,6 +12,7 @@ const (
 	ETH_SYNCING             = "eth_syncing"
 	ETH_CALL                = "eth_call"
 	ETH_GET_BLOCK_BY_NUMBER = "eth_getBlockByNumber"
+	ETH_GET_BALANCE         = "eth_getBalance"
 )
 
 type Client struct {
@@ -64,6 +65,11 @@ func (c *Client) Syncing() (response SyncingOutput, err error) {
 	}
 	return
 
+}
+
+func (c *Client) GetBalance(input GetBalanceInput) (response GetBalanceOutput, err error) {
+	err = c.Node.GenericCall(ETH_GET_BALANCE, input, &response)
+	return
 }
 
 func (c *Client) GetBlockByNumber(input GetBlockByNumberInput) (response GetBlockByNumberOutput, err error) {

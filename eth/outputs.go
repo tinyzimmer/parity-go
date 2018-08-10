@@ -30,6 +30,12 @@ type SyncingOutputDecoded struct {
 	WarpChunksProcessed uint64
 }
 
+type GetBalanceOutput string
+
+func (o GetBalanceOutput) Decode() uint64 {
+	return parityrpc.HexToInt(o)
+}
+
 type GetBlockByNumberOutput struct {
 	Number           string      `json:"number"`
 	Hash             string      `json:"hash"`
