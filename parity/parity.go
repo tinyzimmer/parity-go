@@ -5,7 +5,8 @@ import (
 )
 
 const (
-	PARITY_MODE = "parity_mode"
+	PARITY_MODE  = "parity_mode"
+	PARITY_ENODE = "parity_enode"
 )
 
 type Client struct {
@@ -30,4 +31,10 @@ func (c *Client) Mode() (response ModeOutput, err error) {
 	err = c.Node.GenericCall(PARITY_MODE, ModeInput{}, &response)
 	return
 
+}
+
+func (c *Client) Enode() (response EnodeOutput, err error) {
+	response = ""
+	err = c.Node.GenericCall(PARITY_ENODE, EnodeInput{}, &response)
+	return
 }
