@@ -32,7 +32,7 @@ func main() {
 
 		// query the sync status of the node
 
-		resp, err := client.Mode()
+		resp, err := client.NetPeers()
 		if err != nil {
 			log.Fatal(err)
 		}
